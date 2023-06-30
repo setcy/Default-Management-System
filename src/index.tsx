@@ -5,14 +5,11 @@ import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import { ConfigProvider } from '@arco-design/web-react';
 import zhCN from '@arco-design/web-react/es/locale/zh-CN';
-import enUS from '@arco-design/web-react/es/locale/en-US';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import axios from 'axios';
 import rootReducer from './store';
 import PageLayout from './layout';
 import { GlobalContext } from './context';
-import Login from './pages/login';
-import checkLogin from './utils/checkLogin';
 import changeTheme from './utils/changeTheme';
 import useStorage from './utils/useStorage';
 import './mock';
@@ -24,14 +21,7 @@ function Index() {
   const [theme, setTheme] = useStorage('arco-theme', 'light');
 
   function getArcoLocale() {
-    switch (lang) {
-      case 'zh-CN':
-        return zhCN;
-      case 'en-US':
-        return enUS;
-      default:
-        return zhCN;
-    }
+     return zhCN;
   }
 
   function fetchUserInfo() {
@@ -39,20 +29,10 @@ function Index() {
       type: 'update-userInfo',
       payload: { userLoading: true },
     });
-    axios.get('/api/user/userInfo').then((res) => {
-      store.dispatch({
-        type: 'update-userInfo',
-        payload: { userInfo: res.data, userLoading: false },
-      });
-    });
   }
 
   useEffect(() => {
-    if (checkLogin()) {
       fetchUserInfo();
-    } else if (window.location.pathname.replace(/\//g, '') !== 'login') {
-      window.location.pathname = '/login';
-    }
   }, []);
 
   useEffect(() => {
@@ -85,7 +65,6 @@ function Index() {
         <Provider store={store}>
           <GlobalContext.Provider value={contextValue}>
             <Switch>
-              <Route path="/login" component={Login} />
               <Route path="/" component={PageLayout} />
             </Switch>
           </GlobalContext.Provider>

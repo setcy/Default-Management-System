@@ -19,12 +19,12 @@ function CustomTooltip(props: TooltipProps) {
   const { formatter = (value) => value, color, name } = props;
   return (
     <div className={styles['customer-tooltip']}>
-      <div className={styles['customer-tooltip-title']}>
+      <div>
         <Text bold>{props.title}</Text>
       </div>
       <div>
         {props.data.map((item, index) => (
-          <div className={styles['customer-tooltip-item']} key={index}>
+          <div key={index}>
             <div>
               <Badge color={color || item.color} />
               {name || item.name}

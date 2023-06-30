@@ -23,7 +23,6 @@ import useRoute, { IRoute } from '@/routes';
 import useLocale from './utils/useLocale';
 import getUrlParams from './utils/getUrlParams';
 import lazyload from './utils/lazyload';
-import { GlobalState } from './store';
 import styles from './style/layout.module.less';
 
 const MenuItem = Menu.Item;
@@ -48,8 +47,6 @@ function getIconFromKey(key) {
       return <IconCheckCircle className={styles.icon} />;
     case 'exception':
       return <IconExclamationCircle className={styles.icon} />;
-    case 'user':
-      return <IconUser className={styles.icon} />;
     default:
       return <div className={styles['icon-empty']} />;
   }
@@ -85,11 +82,8 @@ function PageLayout() {
   const pathname = history.location.pathname;
   const currentComponent = qs.parseUrl(pathname).url.slice(1);
   const locale = useLocale();
-  const { settings, userLoading, userInfo } = useSelector(
-    (state: GlobalState) => state
-  );
 
-  const [routes, defaultRoute] = useRoute(userInfo?.permissions);
+  const [routes, defaultRoute] = useRoute("/");
   const defaultSelectedKeys = [currentComponent || defaultRoute];
   const paths = (currentComponent || defaultRoute).split('/');
   const defaultOpenKeys = paths.slice(0, paths.length - 1);
@@ -106,11 +100,11 @@ function PageLayout() {
   >(new Map());
 
   const navbarHeight = 60;
-  const menuWidth = collapsed ? 48 : settings.menuWidth;
+  const menuWidth = 240;
 
-  const showNavbar = settings.navbar && urlParams.navbar !== false;
-  const showMenu = settings.menu && urlParams.menu !== false;
-  const showFooter = settings.footer && urlParams.footer !== false;
+  const showNavbar =  urlParams.navbar !== false;
+  const showMenu =  urlParams.menu !== false;
+  const showFooter = urlParams.footer !== false;
 
   const flattenRoutes = useMemo(() => getFlattenRoutes(routes) || [], [routes]);
 
@@ -208,16 +202,11 @@ function PageLayout() {
   return (
     <Layout className={styles.layout}>
       <div
-        className={cs(styles['layout-navbar'], {
-          [styles['layout-navbar-hidden']]: !showNavbar,
-        })}
+        className={cs(styles['layout-navbar'])}
       >
-        <Navbar show={showNavbar} />
+        <Navbar />
       </div>
-      {userLoading ? (
-        <Spin className={styles['spin']} />
-      ) : (
-        <Layout>
+      <Layout>
           {showMenu && (
             <Sider
               className={styles['layout-sider']}
@@ -282,7 +271,6 @@ function PageLayout() {
             {showFooter && <Footer />}
           </Layout>
         </Layout>
-      )}
     </Layout>
   );
 }
