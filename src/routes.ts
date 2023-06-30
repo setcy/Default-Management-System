@@ -150,6 +150,34 @@ export const routes: IRoute[] = [
       },
     ],
   },
+  {
+    name: '违约原因维护',
+    key: 'reason',
+  },
+  {
+    name: '违约认定申请',
+    key: 'request',
+  },
+  {
+    name: '违约认定审核',
+    key: 'approve',
+  },
+  {
+    name: '违约信息查询',
+    key: 'search',
+  },
+  {
+    name: '违约重生',
+    key: 'renew',
+  },
+  {
+    name: '违约重生审核',
+    key: 'renewApprove',
+  },
+  {
+    name: '违约统计',
+    key: 'statistics',
+  }
 ];
 
 export const getName = (path: string, routes) => {
