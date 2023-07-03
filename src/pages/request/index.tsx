@@ -1,18 +1,5 @@
-import React, { useState } from 'react';
-import {
-  Steps,
-  Form,
-  Input,
-  Select,
-  DatePicker,
-  InputTag,
-  Button,
-  Typography,
-  Space,
-  Card,
-  Switch,
-  Result,
-} from '@arco-design/web-react';
+import React, {useState} from 'react';
+import {Button, Card, DatePicker, Form, Input, Select, Space, Typography,} from '@arco-design/web-react';
 import useLocale from '@/utils/useLocale';
 import locale from './locale';
 import styles from './style/index.module.less';
@@ -44,34 +31,20 @@ function StepForm() {
   return (
     <div className={styles.container}>
       <Card>
-        <Title heading={5}>{t['stepForm.desc.basicInfo']}</Title>
-        <div className={styles.wrapper}>
-          <Steps current={current} lineless>
-            <Steps.Step
-              title={t['stepForm.title.basicInfo']}
-              description={t['stepForm.desc.basicInfo']}
-            />
-            <Steps.Step
-              title={t['stepForm.title.channel']}
-              description={t['stepForm.desc.channel']}
-            />
-            <Steps.Step
-              title={t['stepForm.title.created']}
-              description={t['stepForm.desc.created']}
-            />
-          </Steps>
-          <Form form={form} className={styles.form}>
-            {current === 1 && (
-              <Form.Item noStyle>
-                <Form.Item
-                  label={t['stepForm.basicInfo.name']}
-                  required
-                  field="basic.name"
-                  rules={[
-                    {
-                      required: true,
-                      message: t['stepForm.basicInfo.name.required'],
-                    },
+        <Title heading={5}>{"创建认定申请表"}</Title>
+          <div className={styles.wrapper}>
+              <Form form={form} className={styles.form}>
+                  {(
+                      <Form.Item noStyle>
+                          <Form.Item
+                              label={"违约客户编号"}
+                              required
+                              field="basic.name"
+                              rules={[
+                                  {
+                                      required: true,
+                                      message: "违约客户编号不能为空！",
+                                  },
                     {
                       validator: (value: string, callback) => {
                         if (!/^[\u4e00-\u9fa5a-zA-Z0-9]{1,20}$/g.test(value)) {
@@ -82,173 +55,114 @@ function StepForm() {
                   ]}
                 >
                   <Input
-                    placeholder={t['stepForm.basicInfo.name.placeholder']}
+                      placeholder={"请输入违约客户编号！"}
                   />
                 </Form.Item>
                 <Form.Item
-                  label={t['stepForm.basicInfo.channelType']}
-                  required
-                  initialValue="app"
-                  field="basic.channelType"
-                  rules={[
-                    {
-                      required: true,
-                      message: t['stepForm.basicInfo.channelType.required'],
-                    },
-                  ]}
-                >
-                  <Select>
-                    <Select.Option value="app">APP通用渠道</Select.Option>
-                    <Select.Option value="site">网页通用渠道</Select.Option>
-                    <Select.Option value="game">游戏通用渠道</Select.Option>
-                  </Select>
-                </Form.Item>
-                <Form.Item
-                  label={t['stepForm.basicInfo.time']}
-                  required
-                  field="basic.time"
-                  rules={[
-                    {
-                      required: true,
-                      message: t['stepForm.basicInfo.time.required'],
-                    },
-                  ]}
-                >
-                  <DatePicker.RangePicker style={{ width: '100%' }} />
-                </Form.Item>
-                <Form.Item
-                  label={t['stepForm.basicInfo.link']}
-                  required
-                  extra={t['stepForm.basicInfo.link.tips']}
-                  field="basic.link"
-                  initialValue={'https://arco.design'}
-                  rules={[{ required: true }]}
-                >
-                  <Input
-                    placeholder={t['stepForm.basicInfo.link.placeholder']}
-                  />
-                </Form.Item>
-              </Form.Item>
-            )}
-            {current === 2 && (
-              <Form.Item noStyle>
-                <Form.Item
-                  label={t['stepForm.channel.source']}
-                  required
-                  field="channel.source"
-                  rules={[
-                    {
-                      required: true,
-                      message: t['stepForm.channel.source.required'],
-                    },
-                  ]}
-                >
-                  <Input
-                    placeholder={t['stepForm.channel.source.placeholder']}
-                  />
-                </Form.Item>
-                <Form.Item
-                  label={t['stepForm.channel.media']}
-                  required
-                  field="channel.media"
-                  rules={[
-                    {
-                      required: true,
-                      message: t['stepForm.channel.media.required'],
-                    },
-                  ]}
-                >
-                  <Input
-                    placeholder={t['stepForm.channel.media.placeholder']}
-                  />
-                </Form.Item>
-                <Form.Item
-                  label={t['stepForm.channel.keywords']}
-                  required
-                  field="channel.keywords"
-                  initialValue={['今日头条', '火山']}
-                  rules={[{ required: true }]}
-                >
-                  <InputTag />
-                </Form.Item>
-                <Form.Item
-                  label={t['stepForm.channel.remind']}
-                  required
-                  initialValue={true}
-                  field="channel.remind"
-                  triggerPropName="checked"
-                  rules={[{ required: true }]}
-                >
-                  <Switch />
-                </Form.Item>
+                    label={"客户名称"}
+                    required
+                    rules={[
+                        {
+                            required: true,
+                            message: "客户名称不能为空！",
 
-                <Form.Item
-                  label={t['stepForm.channel.content']}
-                  required
-                  field="channel.content"
-                  rules={[
-                    {
-                      required: true,
-                      message: t['stepForm.channel.content.required'],
-                    },
-                  ]}
+                        },
+                    ]}
                 >
-                  <Input.TextArea
-                    placeholder={t['stepForm.channel.content.placeholder']}
-                  />
+                    <Input
+                        placeholder={"请输入客户名称！"}
+                    />
                 </Form.Item>
-              </Form.Item>
-            )}
-            {current !== 3 ? (
-              <Form.Item label=" ">
-                <Space>
-                  {current === 2 && (
-                    <Button
-                      size="large"
-                      onClick={() => setCurrent(current - 1)}
-                    >
-                      {t['stepForm.prev']}
-                    </Button>
+                          <Form.Item
+                              label={"违约原因"}
+                              required
+                              initialValue="first"
+                              rules={[
+                                  {
+                                      required: true,
+                                      message: "违约原因不能为空！",
+                                  },
+                              ]}
+                          >
+                              <Select>
+                                  <Select.Option
+                                      value="first">6个月内，交易对手技术性或资金原因，给当天结算带来头寸缺口2次以上</Select.Option>
+                                  <Select.Option value="second">6个月内各种原因导致撤单两次以上</Select.Option>
+                                  <Select.Option value="third">未能按照规定在宽限期内完成交付义务</Select.Option>
+                                  <Select.Option value="fourth">关联违约</Select.Option>
+                                  <Select.Option value="fifth">发生消极债务置换</Select.Option>
+                                  <Select.Option value="sixth">处于破产保护状态</Select.Option>
+                              </Select>
+                          </Form.Item>
+                          <Form.Item
+                              label={"备注信息"}
+                              rules={[
+                                  {
+                                      required: false,
+
+                                  },
+                              ]}
+                          >
+                              <Input
+                                  placeholder={"可填写备注信息"}
+                              />
+                          </Form.Item>
+                          <Form.Item
+                              label={"严重程度"}
+                              required
+                              initialValue="app"
+                              field="basic.channelType"
+                              rules={[
+                                  {
+                                      required: true,
+                                      message: "严重程度不能为空！",
+                                  },
+                              ]}
+                          >
+                              <Select>
+                                  <Select.Option value="app">低</Select.Option>
+                                  <Select.Option value="site">中</Select.Option>
+                                  <Select.Option value="game">高</Select.Option>
+                              </Select>
+                          </Form.Item>
+                          <Form.Item
+                              label={"认定申请人"}
+                              required
+                              rules={[
+                                  {
+                                      required: true,
+                                      message: "认定申请人不能为空！",
+                                  },
+                              ]}
+                          >
+                              <Input
+                                  placeholder={"请输入认定申请人！"}
+                              />
+                          </Form.Item>
+                          <Form.Item
+                              label={"认定申请时间"}
+                              required
+                              field="basic.time"
+                              rules={[
+                                  {
+                                      required: true,
+                                      message: "请输入认定申请时间",
+                                  },
+                              ]}
+                          >
+                              <DatePicker.RangePicker style={{width: '100%'}}/>
+                          </Form.Item>
+
+                      </Form.Item>
                   )}
-                  {current !== 3 && (
-                    <Button type="primary" size="large" onClick={toNext}>
-                      {t['stepForm.next']}
-                    </Button>
-                  )}
-                </Space>
-              </Form.Item>
-            ) : (
-              <Form.Item noStyle>
-                <Result
-                  status="success"
-                  title={t['stepForm.created.success.title']}
-                  subTitle={t['stepForm.created.success.desc']}
-                  extra={[
-                    <Button
-                      key="reset"
-                      style={{ marginRight: 16 }}
-                      onClick={viewForm}
-                    >
-                      {t['stepForm.created.success.view']}
-                    </Button>,
-                    <Button key="again" type="primary" onClick={reCreateForm}>
-                      {t['stepForm.created.success.again']}
-                    </Button>,
-                  ]}
-                />
-              </Form.Item>
-            )}
-          </Form>
+                  <Space size="large">
+                      <div className={styles.Button}>
+                          <Button type="primary">申请</Button>
+                      </div>
+                  </Space>
+              </Form>
         </div>
-        {current === 3 && (
-          <div className={styles['form-extra']}>
-            <Title heading={6}>{t['stepForm.created.extra.title']}</Title>
-            <Paragraph type="secondary">
-              {t['stepForm.created.extra.desc']}
-              <Button type="text">{t['stepForm.created.extra.detail']}</Button>
-            </Paragraph>
-          </div>
-        )}
+
       </Card>
     </div>
   );

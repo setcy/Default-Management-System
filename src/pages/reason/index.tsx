@@ -1,113 +1,94 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import {
-  Table,
-  Card,
-  PaginationProps,
-  Button,
-  Space,
-  Typography,
-} from '@arco-design/web-react';
-import { IconDownload, IconPlus } from '@arco-design/web-react/icon';
-import axios from 'axios';
-import useLocale from '@/utils/useLocale';
-import SearchForm from './form';
-import locale from './locale';
-import styles from './style/index.module.less';
+import React, {useState} from 'react';
+import {Card, Table, Typography,} from '@arco-design/web-react';
 import './mock';
-import { getColumns } from './constants';
 
-const { Title } = Typography;
-export const ContentType = ['图文', '横版短视频', '竖版短视频'];
-export const FilterType = ['规则筛选', '人工'];
-export const Status = ['已上线', '未上线'];
+const {Title} = Typography;
 
-function SearchTable() {
-  const t = useLocale(locale);
 
-  const tableCallback = async (record, type) => {
-    console.log(record, type);
-  };
+const columns = [
+  {
+    title: "序号",
+    dataIndex: "number"
+  },
+  {
+    title: "违约原因",
+    dataIndex: "reason"
+  },
+  {
+    title: "是否启用",
+    dataIndex: "isTrigger"
+  },
 
-  const columns = useMemo(() => getColumns(t, tableCallback), [t]);
-
-  const [data, setData] = useState([]);
-  const [pagination, setPatination] = useState<PaginationProps>({
-    sizeCanChange: true,
-    showTotal: true,
-    pageSize: 10,
-    current: 1,
-    pageSizeChangeResetCurrent: true,
-  });
-  const [loading, setLoading] = useState(true);
-  const [formParams, setFormParams] = useState({});
-
-  useEffect(() => {
-    fetchData();
-  }, [pagination.current, pagination.pageSize, JSON.stringify(formParams)]);
-
-  function fetchData() {
-    const { current, pageSize } = pagination;
-    setLoading(true);
-    axios
-      .get('/api/list', {
-        params: {
-          page: current,
-          pageSize,
-          ...formParams,
-        },
-      })
-      .then((res) => {
-        setData(res.data.list);
-        setPatination({
-          ...pagination,
-          current,
-          pageSize,
-          total: res.data.total,
-        });
-        setLoading(false);
-      });
+];
+const data = [
+  {
+    id: '1',
+    number: "1",
+    reason: "6个月内，交易对手技术性或资金原因，给当天结算带来头寸缺口2次以上",
+    isTrigger: "false"
+  },
+  {
+    id: '2',
+    number: "2",
+    reason: "6个月内各种原因导致撤单两次以上",
+    isTrigger: "false"
+  },
+  {
+    id: '3',
+    number: "3",
+    reason: "未能按照规定在宽限期内完成交付义务",
+    isTrigger: "false"
+  },
+  {
+    id: '4',
+    number: "4",
+    reason: "关联违约",
+    isTrigger: "false"
+  },
+  {
+    id: '5',
+    number: "5",
+    reason: "发生消极债务置换",
+    isTrigger: "false"
+  },
+  {
+    id: '6',
+    number: "6",
+    reason: "处于破产保护状态",
+    isTrigger: "false"
   }
+];
 
-  function onChangeTable({ current, pageSize }) {
-    setPatination({
-      ...pagination,
-      current,
-      pageSize,
-    });
-  }
-
-  function handleSearch(params) {
-    setPatination({ ...pagination, current: 1 });
-    setFormParams(params);
-  }
-
+function App() {
+  const [type] = useState('checkbox');
+  const [selectedRowKeys, setSelectedRowKeys] = useState<(string | number)[]>(['4']);
   return (
-    <Card>
-      <Title heading={6}>{t['menu.list.searchTable']}</Title>
-      <SearchForm onSearch={handleSearch} />
-        <div className={styles['button-group']}>
-          <Space>
-            <Button type="primary" icon={<IconPlus />}>
-              {t['searchTable.operations.add']}
-            </Button>
-            <Button>{t['searchTable.operations.upload']}</Button>
-          </Space>
-          <Space>
-            <Button icon={<IconDownload />}>
-              {t['searchTable.operation.download']}
-            </Button>
-          </Space>
+      <Card>
+        <Title heading={6}>{"违约原因"}</Title>
+        <div>
+          <Table
+              rowKey='id'
+              columns={columns}
+              data={data}
+              rowSelection={{
+                type: "checkbox",
+                selectedRowKeys,
+                onChange: (selectedRowKeys, selectedRows) => {
+                  console.log('onChange:', selectedRowKeys, selectedRows);
+                  setSelectedRowKeys(selectedRowKeys);
+                },
+                onSelect: (selected, record, selectedRows) => {
+                  console.log('onSelect:', selected, record, selectedRows);
+                },
+
+              }}
+          />
         </div>
-      <Table
-        rowKey="id"
-        loading={loading}
-        onChange={onChangeTable}
-        pagination={pagination}
-        columns={columns}
-        data={data}
-      />
-    </Card>
+
+      </Card>
   );
 }
 
-export default SearchTable;
+export default App;
+
+
