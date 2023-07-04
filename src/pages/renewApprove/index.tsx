@@ -1,6 +1,8 @@
 import React from 'react';
 import {Button, Card, Table, Typography} from '@arco-design/web-react';
 import './mock';
+import useRequest from "@/utils/useRequest";
+import {RenewApproveInfo} from "@/model/interface";
 
 const {Title} = Typography;
 const empty = () => {
@@ -10,7 +12,7 @@ const enter = () => {
 const columns = [
     {
         title: '违约客户名',
-        dataIndex: 'name'
+        dataIndex: 'cus_name'
     },
     {
         title: '认定违约原因',
@@ -18,19 +20,19 @@ const columns = [
     },
     {
         title: "严重程度",
-        dataIndex: "level"
+        dataIndex: "degree"
     },
     {
         title: "认定申请人",
-        dataIndex: "apply"
+        dataIndex: "identify_name"
     },
     {
         title: "认定申请时间",
-        dataIndex: "applytime"
+        dataIndex: "request_time"
     },
     {
         title: "重生原因",
-        dataIndex: "renewreason"
+        dataIndex: "rebirth_reason"
     },
     {
         title: "审核操作",
@@ -48,23 +50,15 @@ const columns = [
 
     }
 ];
-const data = [
-    {
-        key: '1',
-        name: '',
-        reason: "",
-        level: '',
-        apply: '',
-        applytime: "",
-        renewreason: "",
-        operation: ""
-    }
-];
+
 const App = () => {
+
+    const [loading, data] = useRequest<RenewApproveInfo[]>('/renewApprove', []);
+
     return (
         <Card>
             <Title heading={6}>{""}</Title>
-            <Table columns={columns} data={data}/>
+            <Table loading={loading} columns={columns} data={data}/>
         </Card>)
 };
 
