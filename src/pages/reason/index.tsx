@@ -1,6 +1,9 @@
 import React, {useState} from 'react';
 import {Card, Table, Typography,} from '@arco-design/web-react';
 import './mock';
+import useRequest, {baseUrl} from "@/utils/useRequest";
+import {ReasonInfo} from "@/model/interface";
+import axios from "axios";
 
 const {Title} = Typography;
 
@@ -8,17 +11,12 @@ const {Title} = Typography;
 const columns = [
   {
     title: "序号",
-    dataIndex: "number"
+    dataIndex: "id"
   },
   {
     title: "违约原因",
     dataIndex: "reason"
-  },
-  {
-    title: "是否启用",
-    dataIndex: "isTrigger"
-  },
-
+  }
 ];
 const data = [
   {
@@ -60,27 +58,34 @@ const data = [
 ];
 
 function App() {
-  const [type] = useState('checkbox');
-  const [selectedRowKeys, setSelectedRowKeys] = useState<(string | number)[]>(['4']);
+  const [loading, data] = useRequest<ReasonInfo[]>('/reason', []);
+  let selected = [];
+  for (let i = 0; i < data.length; i++) {
+    if (data[i].enabled == true) {
+      selected.push(data[i].id);
+    }
+  }
+  const [selectedRowKeys, setSelectedRowKeys] = useState<(string | number)[]>(selected);
   return (
       <Card>
         <Title heading={6}>{"违约原因"}</Title>
         <div>
           <Table
+              loading={loading}
               rowKey='id'
               columns={columns}
               data={data}
               rowSelection={{
                 type: "checkbox",
                 selectedRowKeys,
-                onChange: (selectedRowKeys, selectedRows) => {
-                  console.log('onChange:', selectedRowKeys, selectedRows);
-                  setSelectedRowKeys(selectedRowKeys);
-                },
                 onSelect: (selected, record, selectedRows) => {
                   console.log('onSelect:', selected, record, selectedRows);
+                  axios
+                      .get(baseUrl + `/reason/change?id=${record.id}&selected=${selected}`)
+                      .then((res) => {
+                        setSelectedRowKeys(selectedRows.map((item) => item.id));
+                      })
                 },
-
               }}
           />
         </div>
