@@ -1,15 +1,19 @@
 import React from 'react';
-import {Button, Card, Select, Table, Typography} from '@arco-design/web-react';
+import {Button, Card, Message, Select, Table, Typography} from '@arco-design/web-react';
 import './mock';
 import useRequest, {baseUrl} from "@/utils/useRequest";
 import {RenewInfo} from "@/model/interface";
 import axios from "axios";
 
-const empty = () => {
+const submitChange = (id) => {
     axios
-        .get(baseUrl + '/renew/change')
+        .get(baseUrl + '/renew/change?cus_id=' + id)
         .then((res) => {
-            console.log(res);
+            if (res.status === 200 || res.status === 204) {
+                Message.success('提交成功!')
+            } else {
+                Message.error('提交失败!')
+            }
         });
 }
 const {Title} = Typography;
@@ -55,7 +59,7 @@ const columns = [
         dataIndex: "operation",
         render: (_, record) => (
             <Button
-                onClick={() => empty()}
+                onClick={() => submitChange(record.cus_id)}
                 type='primary'
                 status='danger'
             >提交审核

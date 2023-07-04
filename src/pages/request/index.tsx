@@ -1,7 +1,5 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {Button, Card, DatePicker, Form, Input, Message, Select, Space, Typography,} from '@arco-design/web-react';
-import useLocale from '@/utils/useLocale';
-import locale from './locale';
 import styles from './style/index.module.less';
 import axios from "axios";
 import {baseUrl} from "@/utils/useRequest";
@@ -9,9 +7,6 @@ import {baseUrl} from "@/utils/useRequest";
 const {Title, Paragraph} = Typography;
 
 function StepForm() {
-    const t = useLocale(locale);
-    const [current, setCurrent] = useState(1);
-
     const [form] = Form.useForm();
 
     const submit = async () => {
