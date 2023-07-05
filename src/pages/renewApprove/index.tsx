@@ -5,8 +5,8 @@ import {RenewApproveInfo} from "@/model/interface";
 import axios from "axios";
 
 const {Title} = Typography;
-const submitRenewApprove = (id: number, isApprove: boolean) => {
-    axios
+const submitRenewApprove = async (id: number, isApprove: boolean) => {
+    await axios
         .get(baseUrl + '/renewApprove/change?cus_id=' + id + '&isApprove=' + isApprove)
         .then((res) => {
             if (res.status === 200 || res.status === 204) {
@@ -17,52 +17,65 @@ const submitRenewApprove = (id: number, isApprove: boolean) => {
         });
 };
 
-const columns = [
-    {
-        title: '违约客户名',
-        dataIndex: 'cus_name'
-    },
-    {
-        title: '认定违约原因',
-        dataIndex: 'reason'
-    },
-    {
-        title: "严重程度",
-        dataIndex: "degree"
-    },
-    {
-        title: "认定申请人",
-        dataIndex: "identify_name"
-    },
-    {
-        title: "认定申请时间",
-        dataIndex: "request_time"
-    },
-    {
-        title: "重生原因",
-        dataIndex: "rebirth_reason"
-    },
-    {
-        title: "审核操作",
-        dataIndex: "operation",
-        render: (_, record) => (
-            <>
-                <Button onClick={() => submitRenewApprove(record.cus_id, false)}
-                        type="primary"
-                        status="danger">拒绝</Button>
-                <Button onClick={() => submitRenewApprove(record.cus_id, true)}
-                        type="primary"
-                        status="success"
-                >通过</Button>
-            </>
-        )
-
-    }
-];
-
 const App = () => {
 
-    const [loading, data] = useRequest<RenewApproveInfo[]>('/renewApprove', []);
+    const [loading, data, refresh] = useRequest<RenewApproveInfo[]>('/renewApprove', []);
+
+    const columns = [
+        {
+            title: '违约客户名',
+            dataIndex: 'cus_name'
+        },
+        {
+            title: '认定违约原因',
+            dataIndex: 'reason'
+        },
+        {
+            title: "严重程度",
+            dataIndex: "degree"
+        },
+        {
+            title: "认定申请人",
+            dataIndex: "identify_name"
+        },
+        {
+            title: "认定申请时间",
+            dataIndex: "request_time"
+        },
+        {
+            title: "重生原因",
+            dataIndex: "rebirth_reason"
+        },
+        {
+            title: "审核操作",
+            dataIndex: "operation",
+            render: (_, record) => {
+                switch (record.verify_condition) {
+                    case "true":
+                        return "已通过";
+                    case "false":
+                        return "已拒绝";
+                    default:
+                        return (
+                            <>
+                                <Button onClick={() => {
+                                    submitRenewApprove(record.cus_id, false).then(() => refresh())
+                                }}
+                                        type="primary"
+                                        status="danger">拒绝</Button>
+                                <Button onClick={() => {
+                                    submitRenewApprove(record.cus_id, true).then(() => refresh())
+                                }}
+                                        type="primary"
+                                        status="success"
+                                >通过</Button>
+                            </>
+                        )
+                }
+            }
+
+        }
+    ];
 
     return (
         <Card>

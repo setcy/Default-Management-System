@@ -1,118 +1,65 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { Card, Grid, Table, Space, Typography } from '@arco-design/web-react';
-import useLocale from '@/utils/useLocale';
+import React, {useEffect, useState} from 'react';
+import {Card, Grid, Radio, Space, Typography} from '@arco-design/web-react';
 import axios from 'axios';
-import locale from './locale';
-import PublicOpinion from './public-opinion';
 import MultiInterval from '@/components/Chart/multi-stack-interval';
 import PeriodLine from '@/components/Chart/period-legend-line';
-import './mock';
+import {baseUrl} from "@/utils/useRequest";
 
-const { Row, Col } = Grid;
+const {Row, Col} = Grid;
 
 function DataAnalysis() {
-  const t = useLocale(locale);
-  const [loading, setLoading] = useState(false);
-  const [tableLoading, setTableLoading] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [chartData, setChartData] = useState([]);
 
-  const [chartData, setChartData] = useState([]);
-  const [tableData, setTableData] = useState([]);
+    const [rule1, setRule1] = useState('按行业');
+    const [rule2, setRule2] = useState('违约');
 
-  const getChartData = async () => {
-    setLoading(true);
-    const { data } = await axios
-      .get('/api/data-analysis/content-publishing')
-      .finally(() => setLoading(false));
-    setChartData(data);
-  };
+    const getChartData = async (rule1: string, rule2: string) => {
+        setLoading(true);
+        const {data} = await axios
+            .get(baseUrl + '/statistic?rule1=' + rule1 + '&rule2=' + rule2)
+            .finally(() => setLoading(false));
+        setChartData(data);
+    };
 
-  const getTableData = async () => {
-    setTableLoading(true);
-    const { data } = await axios
-      .get('/api/data-analysis/author-list')
-      .finally(() => setTableLoading(false));
-    setTableData(data.list);
-  };
+    useEffect(() => {
+        getChartData(rule1, rule2);
+    }, [rule1, rule2]);
 
-  useEffect(() => {
-    getChartData();
-    getTableData();
-  }, []);
-
-  const columns = useMemo(() => {
-    return [
-      {
-        title: t['dataAnalysis.authorTable.rank'],
-        dataIndex: 'id',
-      },
-      {
-        title: t['dataAnalysis.authorTable.author'],
-        dataIndex: 'author',
-      },
-      {
-        title: t['dataAnalysis.authorTable.content'],
-        dataIndex: 'contentCount',
-        sorter: (a, b) => a.contentCount - b.contentCount,
-        render(x) {
-          return Number(x).toLocaleString();
-        },
-      },
-      {
-        title: t['dataAnalysis.authorTable.click'],
-        dataIndex: 'clickCount',
-        sorter: (a, b) => a.clickCount - b.clickCount,
-        render(x) {
-          return Number(x).toLocaleString();
-        },
-      },
-    ];
-  }, [t]);
-
-  return (
-    <Space size={16} direction="vertical" style={{ width: '100%' }}>
-      <Card>
-        <Typography.Title heading={6}>
-          {t['dataAnalysis.title.publicOpinion']}
-        </Typography.Title>
-        <PublicOpinion />
-      </Card>
-      <Row gutter={16}>
-        <Col span={14}>
-          <Card>
-            <Typography.Title heading={6}>
-              {t['dataAnalysis.title.publishingRate']}
-            </Typography.Title>
-            <MultiInterval data={chartData} loading={loading} />
-          </Card>
-        </Col>
-        <Col span={10}>
-          <Card>
-            <Typography.Title heading={6}>
-              {t['dataAnalysis.title.authorsList']}
-            </Typography.Title>
-            <div style={{ height: '370px' }}>
-              <Table
-                rowKey="id"
-                loading={tableLoading}
-                pagination={false}
-                data={tableData}
-                columns={columns}
-              />
-            </div>
-          </Card>
-        </Col>
-      </Row>
-      <Row>
-        <Col span={24}>
-          <Card>
-            <Typography.Title heading={6}>
-              {t['dataAnalysis.title.publishingTiming']}
-            </Typography.Title>
-            <PeriodLine data={chartData} loading={loading} />
-          </Card>
-        </Col>
-      </Row>
-    </Space>
-  );
+    return (
+        <Space size={16} direction="vertical" style={{width: '100%'}}>
+            <span style={{margin: "0 200px", display: "flex", justifyContent: "space-around"}}>
+                <Radio.Group defaultValue={rule1} name='type' type='button' onChange={(value) => setRule1(value)}>
+                    <Radio value='按行业'>按行业</Radio>
+                    <Radio value='按区域'>按区域</Radio>
+                </Radio.Group>
+                <Radio.Group defaultValue={rule2} name='type' type='button' onChange={(value) => setRule2(value)}>
+                    <Radio value='违约'>违约</Radio>
+                    <Radio value='违约重生'>违约重生</Radio>
+                </Radio.Group>
+            </span>
+            <Row>
+                <Col>
+                    <Card>
+                        <Typography.Title heading={6}>
+                            {"各行业主体个数"}
+                        </Typography.Title>
+                        <PeriodLine data={chartData} loading={loading}/>
+                    </Card>
+                </Col>
+            </Row>
+            <Row>
+                <Col>
+                    <Card>
+                        <Typography.Title heading={6}>
+                            {"各行业占比"}
+                        </Typography.Title>
+                        <MultiInterval data={chartData} loading={loading}/>
+                    </Card>
+                </Col>
+            </Row>
+        </Space>
+    );
 }
+
 export default DataAnalysis;

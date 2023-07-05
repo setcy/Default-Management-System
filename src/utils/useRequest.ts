@@ -1,23 +1,27 @@
 import axios from 'axios';
-import {useEffect, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 
-export const baseUrl = 'http://127.0.0.1:4523/m1/2948173-0-default/api';
+export const baseUrl = 'http://localhost:8000/api';
 
-export default <T>(url: string, defaultValue: T): [boolean, T] => {
-  const [loading, setLoading] = useState(false);
-  const [data, setData] = useState<T>(defaultValue);
+export default <T>(url: string, defaultValue: T): [boolean, T, () => void] => {
+    const [loading, setLoading] = useState(false);
+    const [data, setData] = useState<T>(defaultValue);
 
-  useEffect(() => {
-    setLoading(true);
-    axios
-        .get(baseUrl + url)
-        .then((res) => {
-          setData(res.data);
-        })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, [url]);
+    const [refreshIndex, setRefreshIndex] = useState(0);  // New state for refresh functionality
 
-  return [loading, data];
+    const refresh = useCallback(() => setRefreshIndex(prevIndex => prevIndex + 1), []);  // Function to trigger data reload
+
+    useEffect(() => {
+        setLoading(true);
+        axios
+            .get(baseUrl + url)
+            .then((res) => {
+                setData(res.data);
+            })
+            .finally(() => {
+                setLoading(false);
+            });
+    }, [url, refreshIndex]);
+
+    return [loading, data, refresh];
 };

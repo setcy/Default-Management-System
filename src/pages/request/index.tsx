@@ -96,7 +96,7 @@ function StepForm() {
                             <Form.Item
                                 label={"严重程度"}
                                 required
-                                initialValue="app"
+                                initialValue="低"
                                 field="degree"
                                 rules={[
                                     {
@@ -106,9 +106,9 @@ function StepForm() {
                                 ]}
                             >
                                 <Select>
-                                    <Select.Option value="low">低</Select.Option>
-                                    <Select.Option value="middle">中</Select.Option>
-                                    <Select.Option value="high">高</Select.Option>
+                                    <Select.Option value="低">低</Select.Option>
+                                    <Select.Option value="中">中</Select.Option>
+                                    <Select.Option value="高">高</Select.Option>
                                 </Select>
                             </Form.Item>
                             <Form.Item
