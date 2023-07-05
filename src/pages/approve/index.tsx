@@ -17,51 +17,51 @@ const App = () => {
             title: '违约客户名',
             dataIndex: 'cus_name'
         },
-    {
-      title: '认定违约原因',
-      dataIndex: 'reason'
-    },
-    {
-      title: "严重程度",
-      dataIndex: "degree"
-    },
-    {
-      title: "认定申请人",
-      dataIndex: "identify_name"
-    },
-    {
-      title: "认定申请时间",
-      dataIndex: "request_time"
-    },
-    {
-      title: "审核操作",
-      dataIndex: "operation",
-      render: (_, record) => {
-          switch (record.verify_condition) {
-              case "true":
-                  return "已通过";
-              case "false":
-                  return "已拒绝";
-              default:
-                  return (
-                      <>
-                          <Button onClick={() => {
-                              audit(record.cus_id, false).then(() => refresh())
-                          }}
-                                  type="primary"
-                                  status="danger">拒绝</Button>
-                          <Button onClick={() => {
-                              audit(record.cus_id, true).then(() => refresh())
-                          }}
-                                  type="primary"
-                                  status="success"
-                          >通过</Button>
-                      </>
-                  )
-          }
-      }
+        {
+            title: '认定违约原因',
+            dataIndex: 'reason'
+        },
+        {
+            title: "严重程度",
+            dataIndex: "degree"
+        },
+        {
+            title: "认定申请人",
+            dataIndex: "identify_name"
+        },
+        {
+            title: "认定申请时间",
+            dataIndex: "request_time"
+        },
+        {
+            title: "审核操作",
+            dataIndex: "operation",
+            render: (_, record) => {
+                switch (record.verify_condition) {
+                    case "true":
+                        return "已通过";
+                    case "false":
+                        return "已拒绝";
+                    default:
+                        return (
+                            <>
+                                <Button onClick={() => {
+                                    audit(record.cus_id, false).then(() => refresh())
+                                }}
+                                        type="primary"
+                                        status="danger">拒绝</Button>
+                                <Button onClick={() => {
+                                    audit(record.cus_id, true).then(() => refresh())
+                                }}
+                                        type="primary"
+                                        status="success"
+                                >通过</Button>
+                            </>
+                        )
+                }
+            }
 
-    }
+        }
     ];
 
     const audit = async (id: number, info: boolean) => {
@@ -76,11 +76,11 @@ const App = () => {
             })
     };
 
-  return (
-      <Card>
-        <Title heading={6}>{""}</Title>
-        <Table loading={loading} columns={columns} data={data}/>
-      </Card>)
+    return (
+        <Card>
+            <Title heading={6}>{""}</Title>
+            <Table loading={loading} columns={columns} data={data}/>
+        </Card>)
 };
 
 export default App;

@@ -11,66 +11,65 @@ import PageLayout from './layout';
 import {GlobalContext} from './context';
 import changeTheme from './utils/changeTheme';
 import useStorage from './utils/useStorage';
-import './mock';
 
 const store = createStore(rootReducer);
 
 function Index() {
-  const [lang, setLang] = useStorage('arco-lang', 'en-US');
-  const [theme, setTheme] = useStorage('arco-theme', 'light');
+    const [lang, setLang] = useStorage('arco-lang', 'en-US');
+    const [theme, setTheme] = useStorage('arco-theme', 'light');
 
-  function getArcoLocale() {
-     return zhCN;
-  }
+    function getArcoLocale() {
+        return zhCN;
+    }
 
-  function fetchUserInfo() {
-    store.dispatch({
-      type: 'update-userInfo',
-      payload: { userLoading: true },
-    });
-  }
+    function fetchUserInfo() {
+        store.dispatch({
+            type: 'update-userInfo',
+            payload: {userLoading: true},
+        });
+    }
 
-  useEffect(() => {
-      fetchUserInfo();
-  }, []);
+    useEffect(() => {
+        fetchUserInfo();
+    }, []);
 
-  useEffect(() => {
-    changeTheme(theme);
-  }, [theme]);
+    useEffect(() => {
+        changeTheme(theme);
+    }, [theme]);
 
-  const contextValue = {
-    lang,
-    setLang,
-    theme,
-    setTheme,
-  };
+    const contextValue = {
+        lang,
+        setLang,
+        theme,
+        setTheme,
+    };
 
-  return (
-    <BrowserRouter>
-      <ConfigProvider
-        locale={getArcoLocale()}
-        componentConfig={{
-          Card: {
-            bordered: false,
-          },
-          List: {
-            bordered: false,
-          },
-          Table: {
-            border: false,
-          },
-        }}
-      >
-        <Provider store={store}>
-          <GlobalContext.Provider value={contextValue}>
-            <Switch>
-              <Route path="/" component={PageLayout} />
-            </Switch>
-          </GlobalContext.Provider>
-        </Provider>
-      </ConfigProvider>
-    </BrowserRouter>
-  );
+    return (
+        <BrowserRouter>
+            <ConfigProvider
+                locale={getArcoLocale()}
+                componentConfig={{
+                    Card: {
+                        bordered: false,
+                    },
+                    List: {
+                        bordered: false,
+                    },
+                    Table: {
+                        border: false,
+                    },
+                }}
+            >
+                <Provider store={store}>
+                    <GlobalContext.Provider value={contextValue}>
+                        <Switch>
+                            <Route path="/" component={PageLayout}/>
+                        </Switch>
+                    </GlobalContext.Provider>
+                </Provider>
+            </ConfigProvider>
+        </BrowserRouter>
+    );
 }
 
-ReactDOM.render(<Index />, document.getElementById('root'));
+ReactDOM.render(<Index/>, document.getElementById('root'));

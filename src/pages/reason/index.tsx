@@ -7,14 +7,14 @@ import axios from "axios";
 const {Title} = Typography;
 
 const columns = [
-  {
-    title: "序号",
-    dataIndex: "id"
-  },
-  {
-    title: "违约原因",
-    dataIndex: "reason"
-  }
+    {
+        title: "序号",
+        dataIndex: "id"
+    },
+    {
+        title: "违约原因",
+        dataIndex: "reason"
+    }
 ];
 
 function App() {
@@ -65,11 +65,11 @@ function App() {
                             }
                         }
                     }}
-          />
-        </div>
+                />
+            </div>
 
-      </Card>
-  );
+        </Card>
+    );
 }
 
 export default App;
