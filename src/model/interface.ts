@@ -1,7 +1,7 @@
 export interface ReasonInfo {
     id?: number
     reason?: string
-    enabled?: boolean
+    enabled?: string
 }
 
 export interface ReasonChangeRequest {
@@ -41,12 +41,12 @@ export interface RenewInfo {
 }
 
 export interface RenewApproveInfo {
-    cus_id: string;
-    cus_name: string;
-    degree: string;
-    identify_name: string;
-    reason: string;
-    rebirth_reason: string;
-    request_time: string;
-    verify_condition: string;
+    cus_id?: string;
+    cus_name?: string;
+    degree?: string;
+    identify_name?: string;
+    reason?: string;
+    rebirth_reason?: string;
+    request_time?: string;
+    verify_condition?: string;
 }

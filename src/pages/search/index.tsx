@@ -1,6 +1,5 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Card, Input, Table} from '@arco-design/web-react';
-import './mock';
 import Title from '@arco-design/web-react/es/Typography/title';
 import {BaseInfo} from "@/model/interface";
 import {baseUrl} from "@/utils/useRequest";
@@ -54,10 +53,12 @@ const App = () => {
             })
     }
 
+    useEffect(() => search(""), []);
+
     return (
         <Card>
             <Title heading={6}>{"违约信息表"}</Title>
-            <InputSearch allowClear placeholder="Enter keyword to search" style={{width: 350}} onSearch={search}/>
+            <InputSearch allowClear placeholder="请输入您要查询的内容" style={{width: 350}} onSearch={search}/>
             <p></p>
             <Table columns={columns} data={data}/>
         </Card>

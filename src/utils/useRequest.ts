@@ -1,7 +1,7 @@
 import axios from 'axios';
 import {useEffect, useState} from 'react';
 
-export const baseUrl = 'http://127.0.0.1:4523/m1/2948173-0-default';
+export const baseUrl = 'http://127.0.0.1:4523/m1/2948173-0-default/api';
 
 export default <T>(url: string, defaultValue: T): [boolean, T] => {
   const [loading, setLoading] = useState(false);

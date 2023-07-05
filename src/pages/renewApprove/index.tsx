@@ -1,6 +1,5 @@
 import React from 'react';
 import {Button, Card, Message, Table, Typography} from '@arco-design/web-react';
-import './mock';
 import useRequest, {baseUrl} from "@/utils/useRequest";
 import {RenewApproveInfo} from "@/model/interface";
 import axios from "axios";
