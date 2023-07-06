@@ -1,0 +1,732 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "违约客户管理",
+    "description": "",
+    "version": "1.0.0"
+  },
+  "tags": [],
+  "paths": {
+    "/api/reason/change": {
+      "get": {
+        "summary": "违约原因修改",
+        "x-apifox-folder": "",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "共有1,2,3,4,5,6 六个",
+            "required": true,
+            "example": "1",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "enabled",
+            "in": "query",
+            "description": "0 不启用 1 启用",
+            "required": true,
+            "example": "true",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-orders": [
+                    "01H4FPR9XXJYCCG5DMCSJZYFK8"
+                  ],
+                  "required": [
+                    "01H4FPR9XXJYCCG5DMCSJZYFK8"
+                  ],
+                  "x-apifox-ignore-properties": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/2948173/apis/api-93049326-run"
+      }
+    },
+    "/api/reason": {
+      "get": {
+        "summary": "违约原因维护读取",
+        "x-apifox-folder": "",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "integer"
+                      },
+                      "enabled": {
+                        "type": "string"
+                      },
+                      "reason": {
+                        "type": "string"
+                      }
+                    },
+                    "x-apifox-orders": [
+                      "id",
+                      "enabled",
+                      "reason"
+                    ],
+                    "required": [
+                      "id",
+                      "reason",
+                      "enabled"
+                    ],
+                    "x-apifox-ignore-properties": []
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/2948173/apis/api-93062736-run"
+      }
+    },
+    "/api/request": {
+      "get": {
+        "summary": "违约认定申请",
+        "x-apifox-folder": "",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "违约客户编号",
+            "required": true,
+            "example": "12345",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "description": "违约客户名称",
+            "required": true,
+            "example": "李四",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "degree",
+            "in": "query",
+            "description": "严重程度",
+            "required": true,
+            "example": "低/中/高",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "reason",
+            "in": "query",
+            "description": "违约原因ID",
+            "required": true,
+            "example": "1",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "remarks",
+            "in": "query",
+            "description": "备注",
+            "required": false,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "identify_name",
+            "in": "query",
+            "description": "认定申请人",
+            "required": true,
+            "example": "张三",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "request_time",
+            "in": "query",
+            "description": "认定开始时间",
+            "required": true,
+            "example": "2001-01-02",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/2948173/apis/api-93095286-run"
+      }
+    },
+    "/api/approve": {
+      "get": {
+        "summary": "违约认定审核读取",
+        "x-apifox-folder": "",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "cus_id": {
+                        "type": "string"
+                      },
+                      "cus_name": {
+                        "type": "string"
+                      },
+                      "verify_condition": {
+                        "type": "string"
+                      },
+                      "reason": {
+                        "type": "string"
+                      },
+                      "degree": {
+                        "type": "string"
+                      },
+                      "identify_name": {
+                        "type": "string"
+                      },
+                      "request_time": {
+                        "type": "string"
+                      }
+                    },
+                    "x-apifox-orders": [
+                      "cus_id",
+                      "cus_name",
+                      "verify_condition",
+                      "reason",
+                      "degree",
+                      "identify_name",
+                      "request_time",
+                      "01H4FWB8GNSXC4G74XDAAFSMGC"
+                    ],
+                    "required": [
+                      "cus_id",
+                      "cus_name",
+                      "reason",
+                      "verify_condition",
+                      "degree",
+                      "identify_name",
+                      "request_time",
+                      "01H4FWB8GNSXC4G74XDAAFSMGC"
+                    ],
+                    "x-apifox-ignore-properties": []
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/2948173/apis/api-93112148-run"
+      }
+    },
+    "/api/approve/change": {
+      "get": {
+        "summary": "违约认定申审核修改",
+        "x-apifox-folder": "",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "cus_id",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "verify_condition",
+            "in": "query",
+            "description": "字符串true为通过，字符串false为不通过，其他情况为未审核",
+            "required": true,
+            "example": "true",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/2948173/apis/api-93116697-run"
+      }
+    },
+    "/api/search": {
+      "get": {
+        "summary": "违约信息查询",
+        "x-apifox-folder": "",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "description": "关键词查询",
+            "required": false,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "cus_id": {
+                        "type": "string"
+                      },
+                      "cus_name": {
+                        "type": "string"
+                      },
+                      "verify_condition": {
+                        "type": "string"
+                      },
+                      "reason": {
+                        "type": "string"
+                      },
+                      "identify_name": {
+                        "type": "string"
+                      },
+                      "degree": {
+                        "type": "string"
+                      },
+                      "register_time": {
+                        "type": "string"
+                      },
+                      "verify_time": {
+                        "type": "string"
+                      }
+                    },
+                    "x-apifox-orders": [
+                      "cus_id",
+                      "cus_name",
+                      "verify_condition",
+                      "reason",
+                      "identify_name",
+                      "degree",
+                      "register_time",
+                      "verify_time"
+                    ],
+                    "required": [
+                      "cus_id",
+                      "cus_name",
+                      "verify_condition",
+                      "reason",
+                      "identify_name",
+                      "degree",
+                      "register_time",
+                      "verify_time"
+                    ],
+                    "x-apifox-ignore-properties": []
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/2948173/apis/api-93117104-run"
+      }
+    },
+    "/api/renew": {
+      "get": {
+        "summary": "违约重生读取",
+        "x-apifox-folder": "",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "cus_id": {
+                        "type": "string"
+                      },
+                      "cus_name": {
+                        "type": "string"
+                      },
+                      "reason": {
+                        "type": "string"
+                      },
+                      "degree": {
+                        "type": "string"
+                      },
+                      "identify_name": {
+                        "type": "string"
+                      },
+                      "request_time": {
+                        "type": "string"
+                      },
+                      "rebirth_reason": {
+                        "type": "string"
+                      },
+                      "verify_condition": {
+                        "type": "string"
+                      }
+                    },
+                    "x-apifox-orders": [
+                      "cus_id",
+                      "cus_name",
+                      "reason",
+                      "degree",
+                      "identify_name",
+                      "request_time",
+                      "rebirth_reason",
+                      "verify_condition"
+                    ],
+                    "required": [
+                      "cus_name",
+                      "reason",
+                      "degree",
+                      "identify_name",
+                      "request_time",
+                      "rebirth_reason",
+                      "verify_condition",
+                      "cus_id"
+                    ],
+                    "x-apifox-ignore-properties": []
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/2948173/apis/api-93122474-run"
+      }
+    },
+    "/api/renew/change": {
+      "get": {
+        "summary": "违约重生修改",
+        "x-apifox-folder": "",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "cus_id",
+            "in": "query",
+            "description": "记录id",
+            "required": false,
+            "example": "1",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/2948173/apis/api-93124932-run"
+      }
+    },
+    "/api/renewApprove": {
+      "get": {
+        "summary": "违约重生审核读取",
+        "x-apifox-folder": "",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "cus_id": {
+                        "type": "string"
+                      },
+                      "cus_name": {
+                        "type": "string"
+                      },
+                      "reason": {
+                        "type": "string"
+                      },
+                      "degree": {
+                        "type": "string"
+                      },
+                      "identify_name": {
+                        "type": "string"
+                      },
+                      "request_time": {
+                        "type": "string"
+                      },
+                      "rebirth_reason": {
+                        "type": "string"
+                      },
+                      "verify_condition": {
+                        "type": "string"
+                      }
+                    },
+                    "x-apifox-orders": [
+                      "cus_id",
+                      "cus_name",
+                      "reason",
+                      "degree",
+                      "identify_name",
+                      "request_time",
+                      "rebirth_reason",
+                      "verify_condition"
+                    ],
+                    "required": [
+                      "cus_id",
+                      "reason",
+                      "degree",
+                      "identify_name",
+                      "request_time",
+                      "rebirth_reason",
+                      "verify_condition",
+                      "cus_name"
+                    ],
+                    "x-apifox-ignore-properties": []
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/2948173/apis/api-93125881-run"
+      }
+    },
+    "/api/renewApprove/change": {
+      "get": {
+        "summary": "违约重生申请修改",
+        "x-apifox-folder": "",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "Cus_id",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "isApprove",
+            "in": "query",
+            "description": "字符串true为通过，字符串false为不通过，其他情况为未审核",
+            "required": false,
+            "example": "true",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/2948173/apis/api-93126308-run"
+      }
+    },
+    "/api/statistic": {
+      "get": {
+        "summary": "统计图表",
+        "x-apifox-folder": "",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "rule1",
+            "in": "query",
+            "description": "按行业、按区域",
+            "required": false,
+            "example": "按行业",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "rule2",
+            "in": "query",
+            "description": "违约、违约重生",
+            "required": false,
+            "example": "违约",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "title": "行业/区域名"
+                      },
+                      "year": {
+                        "type": "string",
+                        "title": "年份"
+                      },
+                      "count": {
+                        "type": "integer",
+                        "title": "主体个数"
+                      },
+                      "rate": {
+                        "type": "integer",
+                        "title": "主体占比（同一年各个行业/地区总和为100）"
+                      }
+                    },
+                    "x-apifox-orders": [
+                      "name",
+                      "year",
+                      "count",
+                      "rate"
+                    ],
+                    "required": [
+                      "name",
+                      "year",
+                      "count",
+                      "rate"
+                    ],
+                    "x-apifox-ignore-properties": []
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/2948173/apis/api-93527726-run"
+      }
+    }
+  },
+  "components": {
+    "schemas": {}
+  },
+  "servers": []
+}

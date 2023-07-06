@@ -5,7 +5,7 @@ import axios from "axios";
 import useRequest, {baseUrl} from "@/utils/useRequest";
 import {ReasonInfo} from "@/model/interface";
 
-const {Title, Paragraph} = Typography;
+const {Title} = Typography;
 
 function StepForm() {
     const [form] = Form.useForm();
@@ -75,6 +75,7 @@ function StepForm() {
                                 <Select>
                                     {
                                         data?.map((item) => (
+                                            item.enabled == "true" &&
                                             <Select.Option value={item.id}>{item.reason}</Select.Option>
                                         ))
                                     }
